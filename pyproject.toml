@@ -1,0 +1,45 @@
+[project]
+name = "bank-to-actualbudget"
+version = "0.1.0"
+description = "parses unstructured PDF or CSV bank statements and transforms them into standardized, ActualBudget compatible CSV files"
+readme = "README.md"
+authors = [
+    { name = "Marco Ramos", email = "contactme@marcoramos.me" }
+]
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+bank-to-actualbudget = "bank_to_actualbudget.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.10.12,<0.11.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.19.1",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
+    "pytest-mock>=3.15.1",
+    "ruff>=0.15.7",
+]
+
+[tool.mypy]
+python_version = "3.10"
+files = ["src", "tests"]
+mypy_path = "src"
+explicit_package_bases = true
+
+[tool.pytest.ini_options]
+addopts = "--cov=bank_to_actualbudget --cov-report=term-missing"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["my_project"]
+omit = ["tests/*", "**/__init__.py"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 60
