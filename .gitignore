@@ -221,3 +221,5 @@ __marimo__/
 # Data
 inputs/
 outputs/
+*.csv
+*.pdf
