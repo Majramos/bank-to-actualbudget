@@ -217,3 +217,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Data
+inputs/
+outputs/
+*.csv
+*.pdf
