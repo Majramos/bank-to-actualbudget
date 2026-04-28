@@ -1,5 +1,14 @@
 # Bank to Actualbudget
 
+<div align="center">
+
+![Python Badge](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff&style=flat)
+![Gitlab Pipeline Status](https://gitlab.com/majramos/bank-to-actualbudget/badges/main/pipeline.svg)
+![Gitlab Release](https://gitlab.com/majramos/bank-to-actualbudget/-/badges/release.svg)
+![Gitlab Coverage](https://gitlab.com/majramos/bank-to-actualbudget/badges/main/coverage.svg)
+
+</div>
+
 **bank-to-actualbudget** is a lightweight automation tool designed to bridge the gap between messy banking exports and clean, actionable budget data. It parses unstructured PDF or CSV bank statements and transforms them into standardized, [ActualBudget](https://actualbudget.org/) compatible CSV files.
 
 ## Setup & Installation
