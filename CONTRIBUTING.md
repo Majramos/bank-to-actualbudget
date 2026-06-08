@@ -1,6 +1,6 @@
 # Contributing to bank-to-actualbudget
 
-Thank you for taking the time to contribute! 🎉  
+Thank you for taking the time to contribute! 🎉
 All types of contributions are welcome and appreciated — from bug reports to code improvements and documentation fixes.
 
 ---
