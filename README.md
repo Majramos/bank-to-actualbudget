@@ -6,6 +6,7 @@
 ![Gitlab Pipeline Status](https://gitlab.com/majramos/bank-to-actualbudget/badges/main/pipeline.svg)
 ![Gitlab Release](https://gitlab.com/majramos/bank-to-actualbudget/-/badges/release.svg)
 ![Gitlab Coverage](https://gitlab.com/majramos/bank-to-actualbudget/badges/main/coverage.svg)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 
 </div>
 
