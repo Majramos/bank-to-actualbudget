@@ -14,9 +14,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed (for any bug fixes.)
 ### Security (in case of vulnerabilities.)
 
+## [0.1.2] - ()
+
+### Added
+- pre-commit hooks to repository
+
+### Fixed
+- code of conduct missing sections
+
 ## [0.1.1] - 2026-06-07
 
 ### Security
 - Bump pytest version
 - Run upgrade on all packages
-
