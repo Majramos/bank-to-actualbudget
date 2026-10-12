@@ -84,5 +84,5 @@ class Processor:
             log.info(" [+] Process completed successfully.")
             return self._output
         except Exception as e:
-            log.error(f" [!] Process failed: {str(e)}")
+            log.error(f" [!] Process failed: {e!s}")
             raise

@@ -15,7 +15,7 @@ def main() -> None:
     parser.add_argument("filename", help="The name of the CSV file to read")
     args = parser.parse_args()
 
-    cwd = Path().resolve()
+    cwd = Path().cwd()
     file_path = cwd / args.filename
     log.info(f"file_name: {file_path}")
 
