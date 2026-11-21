@@ -1,20 +1,22 @@
 import logging
 import sys
+from collections.abc import Iterable
 
 import pytest
+from pytest_mock import MockerFixture
 
 from bank_to_actualbudget.log import get_logger
 
 
 @pytest.fixture(autouse=True)
-def clean_loggers():
+def clean_loggers() -> Iterable:
     """Ensure a clean slate for every test."""
     # This clears the internal registry of loggers
     logging.Logger.manager.loggerDict.clear()
     yield
 
 
-def test_get_logger_initialization():
+def test_get_logger_initialization() -> None:
     """Verify logger is created with correct level and a StreamHandler."""
     name = "test_init"
     logger = get_logger(name)
@@ -28,7 +30,7 @@ def test_get_logger_initialization():
     assert logger.handlers[0].stream == sys.stdout
 
 
-def test_get_logger_formatter_config():
+def test_get_logger_formatter_config() -> None:
     """Check if the formatter string is applied correctly."""
     name = "test_formatter"
     logger = get_logger(name)
@@ -38,11 +40,13 @@ def test_get_logger_formatter_config():
     handler = logger.handlers[0]
     formatter = handler.formatter
 
+    assert formatter is not None
+    assert formatter._fmt is not None
     assert "%(levelname)-7s" in formatter._fmt
     assert "%Y-%m-%d %H:%M:%S" == formatter.datefmt
 
 
-def test_get_logger_prevents_duplicate_handlers():
+def test_get_logger_prevents_duplicate_handlers() -> None:
     """Ensure that calling get_logger twice doesn't stack handlers."""
     name = "test_duplicate"
 
@@ -55,7 +59,7 @@ def test_get_logger_prevents_duplicate_handlers():
     assert len(logger_second.handlers) == 1
 
 
-def test_get_logger_skips_config_if_handlers_exist(mocker):
+def test_get_logger_skips_config_if_handlers_exist(mocker: MockerFixture) -> None:
     """
     Verify that if a logger already has handlers,
     the configuration logic is skipped entirely.

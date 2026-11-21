@@ -1,3 +1,5 @@
+from collections.abc import Callable
+
 import polars as pl
 
 from bank_to_actualbudget.file_io.base import WriteLFObject
@@ -65,7 +67,7 @@ class Processor:
             },
         ]
 
-    def _execute_step(self, step_name: str, func):
+    def _execute_step(self, step_name: str, func: Callable) -> None:
         """Helper to log the start/end of each step."""
         log.info(f"Step: {step_name}...")
         func()

@@ -3,6 +3,7 @@ from pathlib import Path
 
 import polars as pl
 import pytest
+from pytest_mock import MockerFixture
 
 from bank_to_actualbudget.file_io.base import FileIO, WriteLFObject
 
@@ -16,11 +17,11 @@ class ConcreteFileIO(FileIO[pl.DataFrame]):
 
 
 @pytest.fixture
-def file_io():
+def file_io() -> ConcreteFileIO:
     return ConcreteFileIO()
 
 
-def test_get_timestamped_path(file_io, mocker):
+def test_get_timestamped_path(file_io: ConcreteFileIO, mocker: MockerFixture) -> None:
     # Arrange
     path = Path("reports/sales.csv")
     product = "widget_a"
@@ -40,7 +41,9 @@ def test_get_timestamped_path(file_io, mocker):
     assert result.parent == Path("reports")
 
 
-def test_validate_path_exists_and_extension(file_io, tmp_path):
+def test_validate_path_exists_and_extension(
+    file_io: ConcreteFileIO, tmp_path: Path
+) -> None:
     # Setup: Create a real temporary file
     valid_file = tmp_path / "data.csv"
     valid_file.write_text("header\nvalue")
@@ -49,14 +52,16 @@ def test_validate_path_exists_and_extension(file_io, tmp_path):
     file_io.validate_path(valid_file, extension=".csv")
 
 
-def test_validate_path_raises_file_not_found(file_io):
+def test_validate_path_raises_file_not_found(file_io: ConcreteFileIO) -> None:
     path = Path("ghost_file.csv")
 
     with pytest.raises(FileNotFoundError):
         file_io.validate_path(path)
 
 
-def test_validate_path_raises_value_error_on_extension(file_io, tmp_path):
+def test_validate_path_raises_value_error_on_extension(
+    file_io: ConcreteFileIO, tmp_path: Path
+) -> None:
     wrong_ext_file = tmp_path / "data.txt"
     wrong_ext_file.touch()  # Creates the file
 
@@ -64,7 +69,9 @@ def test_validate_path_raises_value_error_on_extension(file_io, tmp_path):
         file_io.validate_path(wrong_ext_file, extension=".csv")
 
 
-def test_validate_path_case_insensitivity(file_io, tmp_path):
+def test_validate_path_case_insensitivity(
+    file_io: ConcreteFileIO, tmp_path: Path
+) -> None:
     # Test that .CSV matches .csv
     upper_file = tmp_path / "DATA.CSV"
     upper_file.touch()
