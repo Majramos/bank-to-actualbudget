@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
 from pathlib import Path
-from typing import Generic, TypedDict, TypeVar
+from typing import TypedDict, TypeVar
 
 import polars as pl
 
@@ -13,7 +13,7 @@ class WriteLFObject(TypedDict):
     lf: pl.LazyFrame
 
 
-class FileIO(ABC, Generic[T]):
+class FileIO[T](ABC):
     @abstractmethod
     def read(self, path: Path) -> T:
         pass
