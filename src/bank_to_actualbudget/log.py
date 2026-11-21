@@ -2,7 +2,7 @@ import logging
 import sys
 
 
-def get_logger(name):
+def get_logger(name: str) -> logging.Logger:
     """
     Configures a logger that displays the module path.
     """

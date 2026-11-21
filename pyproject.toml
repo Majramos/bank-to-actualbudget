@@ -1,41 +1,63 @@
 [project]
 name = "bank-to-actualbudget"
-version = "0.1.2"
+version = "0.2.0"
 description = "parses unstructured PDF or CSV bank statements and transforms them into standardized, ActualBudget compatible CSV files"
 readme = "README.md"
 authors = [
-    { name = "Marco Ramos", email = "contactme@marcoramos.me" }
+    { name = "Marco Ramos", email = "banktoactualbudget@marcoramos.me" }
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.13"
 dependencies = [
-    "polars>=1.39.3",
+    "polars>=2.1.0",
 ]
 
 [project.scripts]
 bank-to-actualbudget = "bank_to_actualbudget.main:main"
 
 [build-system]
-requires = ["uv_build>=0.10.12,<0.11.0"]
+requires = ["uv_build>=0.10.12,<0.14.0"]
 build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
-    "mypy>=1.19.1",
-    "pre-commit>=4.6.0",
-    "pytest>=9.0.3",
+    "mypy>=2.4.0",
+    "pre-commit>=4.7.0",
+    "pytest>=9.1.0",
     "pytest-cov>=7.0.0",
-    "pytest-mock>=3.15.1",
-    "ruff>=0.15.7",
+    "pytest-mock>=3.17.0",
+    "ruff>=0.17.6",
+]
+
+[tool.ruff]
+target-version = "py313"
+include = [
+    "src/**/*.py",
+    "tests/**/*.py"
 ]
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.13"
 files = ["src", "tests"]
 mypy_path = "src"
 explicit_package_bases = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+warn_return_any = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
+no_implicit_reexport = true
+strict_equality = true
 
 [tool.pytest.ini_options]
-addopts = "--cov=bank_to_actualbudget --cov-report=term-missing"
+addopts = [
+    "--verbose",
+    "--cov=bank_to_actualbudget",
+    "--cov-branch",
+    "--cov-report=term-missing",
+    "--cov-fail-under=60"
+]
 testpaths = ["tests"]
 
 [tool.coverage.run]
@@ -46,6 +68,11 @@ omit = ["tests/*", "**/__init__.py"]
 show_missing = true
 skip_covered = true
 fail_under = 60
+exclude_lines = [
+    "pragma: no cover",
+    "@abc.abstractmethod",
+    "raise NotImplementedError",
+]
 
 [tool.commitizen]
 name = "cz_conventional_commits"

@@ -1,17 +1,21 @@
+from pathlib import Path
+
 import polars as pl
 import polars.testing as pl_test
 import pytest
+from pytest_mock import MockerFixture
 
+from bank_to_actualbudget.file_io.base import WriteLFObject
 from bank_to_actualbudget.file_io.csv import CSVFileIO
 
 
 @pytest.fixture
-def csv_io():
+def csv_io() -> CSVFileIO:
     return CSVFileIO()
 
 
 @pytest.fixture
-def sample_csv(tmp_path):
+def sample_csv(tmp_path: Path) -> Path:
     """Creates a temporary CSV file for testing."""
     path = tmp_path / "input.csv"
     df = pl.DataFrame({"a": [1], "b": [2]})
@@ -19,7 +23,9 @@ def sample_csv(tmp_path):
     return path
 
 
-def test_read_success(mocker, csv_io, sample_csv):
+def test_read_success(
+    mocker: MockerFixture, csv_io: CSVFileIO, sample_csv: Path
+) -> None:
     mock_log = mocker.patch("bank_to_actualbudget.file_io.csv.log")
     mock_validate = mocker.patch.object(CSVFileIO, "validate_path")
 
@@ -33,7 +39,9 @@ def test_read_success(mocker, csv_io, sample_csv):
     assert csv_io._input_path == sample_csv
 
 
-def test_write_logic(mocker, csv_io, sample_csv, tmp_path):
+def test_write_logic(
+    mocker: MockerFixture, csv_io: CSVFileIO, sample_csv: Path, tmp_path: Path
+) -> None:
     # Setup state
     csv_io._input_path = sample_csv
     mock_log = mocker.patch("bank_to_actualbudget.file_io.csv.log")
@@ -42,7 +50,7 @@ def test_write_logic(mocker, csv_io, sample_csv, tmp_path):
 
     # Create dummy LazyFrame data
     df_to_write = pl.DataFrame({"data": [100]})
-    lf_obj = {"product": "savings", "lf": df_to_write.lazy()}
+    lf_obj: WriteLFObject = {"product": "savings", "lf": df_to_write.lazy()}
 
     # Act
     csv_io.write([lf_obj])
@@ -57,7 +65,7 @@ def test_write_logic(mocker, csv_io, sample_csv, tmp_path):
     mock_log.info.assert_called_with(f"Writing file: {output_file}")
 
 
-def test_write_missing_input_path(csv_io):
+def test_write_missing_input_path(csv_io: CSVFileIO) -> None:
     # Act / Assert
     with pytest.raises(AttributeError):
         csv_io.write([{"product": "x", "lf": pl.LazyFrame()}])
